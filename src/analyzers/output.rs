@@ -79,8 +79,11 @@ impl Serialize for AnalysisStatus {
     }
 }
 
-impl From<&str> for AnalysisComments {
-    fn from(value: &str) -> Self {
+impl<T> From<T> for AnalysisComments 
+where
+    T: Display
+{
+    fn from(value: T) -> Self {
         Self::General(value.to_string())
     }
 }

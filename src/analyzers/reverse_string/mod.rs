@@ -5,7 +5,7 @@ mod test;
 
 use crate::{
     analyzers::{
-        output::{AnalysisOutput, AnalysisStatus, AnalysisComments},
+        output::{AnalysisOutput, AnalysisStatus},
         Analyze,
     },
     Result,
@@ -83,7 +83,7 @@ impl Analyze for ReverseStringAnalyzer {
         if !solution_contains_neccesary_fn(solution_ast) {
             return Ok(AnalysisOutput::new(
                 AnalysisStatus::Disapprove,
-                vec![AnalysisComments::General(ReverseStringComment::SolutionFunctionNotFound.to_string())],
+                vec![ReverseStringComment::SolutionFunctionNotFound.into()],
             ));
         }
         let mut analysis_output = AnalysisOutput::new(AnalysisStatus::ReferToMentor, vec![]);
