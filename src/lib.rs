@@ -5,7 +5,7 @@ pub mod prelude;
 
 use analyzers::{
     comments::GeneralComment,
-    output::{AnalysisOutput, AnalysisStatus},
+    output::{AnalysisOutput, AnalysisStatus, AnalysisComments},
     Analyze, ReverseStringAnalyzer,
 };
 
@@ -40,7 +40,7 @@ pub fn analyze_exercise(slug: &str, solution_dir: &str) -> Result<()> {
         // Solution file does not exist => refer to mentor.
         AnalysisOutput::new(
             AnalysisStatus::ReferToMentor,
-            vec![GeneralComment::FailedToParseSolutionFile.to_string()],
+            vec![AnalysisComments::General(GeneralComment::FailedToParseSolutionFile.to_string())],
         )
     } else {
         let source = &fs::read_to_string(solution_file_path)?;
@@ -51,7 +51,7 @@ pub fn analyze_exercise(slug: &str, solution_dir: &str) -> Result<()> {
             // Solution file could not be parsed by syn => refer to mentor
             AnalysisOutput::new(
                 AnalysisStatus::ReferToMentor,
-                vec![GeneralComment::FailedToParseSolutionFile.to_string()],
+                vec![AnalysisComments::General(GeneralComment::FailedToParseSolutionFile.to_string())],
             )
         }
     };

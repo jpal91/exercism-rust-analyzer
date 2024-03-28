@@ -18,15 +18,33 @@ pub enum AnalysisStatus {
     ReferToMentor,
 }
 
+#[derive(Debug, PartialEq, Serialize, Clone)]
+pub struct Params {
+    key: String
+}
+
+/// Comment types to be included in analysis
+/// [Exercism Analyzer](https://exercism.org/docs/building/tooling/analyzers/interface)
+#[derive(Debug, PartialEq, Serialize, Clone)]
+pub enum AnalysisComments {
+    General(String),
+    Clippy {
+        comment: String,
+        params: Params,
+        #[serde(rename = "type")]
+        analysis_type: String
+    }
+}
+
 /// The result of the exercise analysis.
 #[derive(Debug, PartialEq, Serialize, Clone)]
 pub struct AnalysisOutput {
     pub status: AnalysisStatus,
-    pub comments: Vec<String>,
+    pub comments: Vec<AnalysisComments>,
 }
 
 impl AnalysisOutput {
-    pub fn new(status: AnalysisStatus, comments: Vec<String>) -> Self {
+    pub fn new(status: AnalysisStatus, comments: Vec<AnalysisComments>) -> Self {
         Self { status, comments }
     }
 
@@ -58,5 +76,11 @@ impl Serialize for AnalysisStatus {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+
+impl From<&str> for AnalysisComments {
+    fn from(value: &str) -> Self {
+        Self::General(value.to_string())
     }
 }

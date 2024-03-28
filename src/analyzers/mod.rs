@@ -78,7 +78,7 @@ pub mod reverse_string;
 pub mod output;
 use crate::analyzers::comments::GeneralComment;
 use crate::Result;
-use output::{AnalysisOutput, AnalysisStatus};
+use output::{AnalysisOutput, AnalysisStatus, AnalysisComments};
 pub use reverse_string::ReverseStringAnalyzer;
 use syn::File;
 
@@ -99,7 +99,7 @@ pub trait Analyze {
         if !solution_raw.contains(method_hint) {
             Ok(AnalysisOutput::new(
                 AnalysisStatus::Disapprove,
-                vec![GeneralComment::SolutionFunctionNotFound.to_string()],
+                vec![AnalysisComments::General(GeneralComment::SolutionFunctionNotFound.to_string())],
             ))
         } else {
             let analysis: Vec<(i32, String)> =
@@ -118,7 +118,7 @@ pub trait Analyze {
                 status,
                 comments: analysis
                     .into_iter()
-                    .map(|(_, comment)| comment)
+                    .map(|(_, comment)| AnalysisComments::General(comment))
                     .collect::<Vec<_>>(),
             })
         }

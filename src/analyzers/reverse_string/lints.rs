@@ -6,7 +6,7 @@
 
 use crate::{
     analyzers::{
-        output::{AnalysisOutput, AnalysisStatus},
+        output::{AnalysisOutput, AnalysisStatus, AnalysisComments},
         reverse_string::comments::ReverseStringComment,
     },
     Result,
@@ -28,7 +28,7 @@ fn check_for_extern_crate(ast: &File, output: &mut AnalysisOutput) -> Result<()>
     if has_extern {
         output
             .comments
-            .push(ReverseStringComment::SuggestRemovingExternCrate.to_string());
+            .push(AnalysisComments::General(ReverseStringComment::SuggestRemovingExternCrate.to_string()));
     }
     Ok(())
 }
@@ -104,7 +104,7 @@ fn check_for_standard_solution(ast: &File, output: &mut AnalysisOutput) -> Resul
         output.status = AnalysisStatus::Approve;
         output
             .comments
-            .push(ReverseStringComment::SuggestDoingBonusTest.to_string())
+            .push(AnalysisComments::General(ReverseStringComment::SuggestDoingBonusTest.to_string()))
     }
     Ok(())
 }

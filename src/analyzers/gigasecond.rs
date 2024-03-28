@@ -37,7 +37,7 @@ impl Analyze for GigasecondAnalyzer {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::analyzers::output::AnalysisStatus;
+    use crate::analyzers::output::{AnalysisStatus, AnalysisComments};
 
     fn test_analyzer_output(solution_ast: &File, solution_raw: &str, expected: AnalysisOutput) {
         assert_eq!(
@@ -64,8 +64,8 @@ pub fn after(start: DateTime<Utc>) -> DateTime<Utc> {
             AnalysisOutput::new(
                 AnalysisStatus::Approve,
                 vec![
-                    LITERAL_WITH_UNDERSCORE_USED.to_string(),
-                    PLUS_OP_USED.to_string(),
+                    AnalysisComments::General(LITERAL_WITH_UNDERSCORE_USED.to_string()),
+                    AnalysisComments::General(PLUS_OP_USED.to_string()),
                 ],
             ),
         );

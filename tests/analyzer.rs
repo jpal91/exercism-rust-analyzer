@@ -2,7 +2,7 @@ use rayon::prelude::*;
 use rust_analyzer::{
     analyze_exercise,
     analyzers::{
-        output::{AnalysisOutput, AnalysisStatus},
+        output::{AnalysisOutput, AnalysisStatus, AnalysisComments},
         reverse_string::comments::ReverseStringComment,
     },
 };
@@ -61,7 +61,7 @@ analyzer_test_case!(
         snippet_dir = "approve_with_suggest_removing_extern_crate_1",
         expected_output = AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestRemovingExternCrate.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SuggestRemovingExternCrate.to_string())],
         )
     )
 );
@@ -72,7 +72,7 @@ analyzer_test_case!(
         snippet_dir = "approve_with_suggest_removing_extern_crate_2",
         expected_output = AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestRemovingExternCrate.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SuggestRemovingExternCrate.to_string())],
         )
     )
 );
@@ -83,7 +83,7 @@ analyzer_test_case!(
         snippet_dir = "approve_with_suggest_bonus_1",
         expected_output = AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestDoingBonusTest.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SuggestDoingBonusTest.to_string())],
         )
     )
 );
@@ -94,7 +94,7 @@ analyzer_test_case!(
         snippet_dir = "approve_with_suggest_bonus_2",
         expected_output = AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestDoingBonusTest.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SuggestDoingBonusTest.to_string())],
         )
     )
 );
@@ -105,7 +105,7 @@ analyzer_test_case!(
         snippet_dir = "disapprove_with_solution_not_found",
         expected_output = AnalysisOutput::new(
             AnalysisStatus::Disapprove,
-            vec![ReverseStringComment::SolutionFunctionNotFound.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SolutionFunctionNotFound.to_string())],
         )
     )
 );

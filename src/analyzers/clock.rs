@@ -95,7 +95,7 @@ impl Clock {
                 vec![
                     IMPL_DISPLAY.into(),
                     DERIVE_PARTIAL_EQ.into(),
-                    USE_REM_EUCLID.to_string(),
+                    USE_REM_EUCLID.into(),
                     ONLY_STORE_MINUTES.into(),
                 ],
             ),

@@ -1,5 +1,6 @@
 use super::*;
 use crate::analyzers::reverse_string::comments::ReverseStringComment;
+use crate::analyzers::AnalysisComments;
 use syn::File;
 
 fn test_analyzer_output(solution_ast: &File, expected: AnalysisOutput) {
@@ -18,7 +19,7 @@ fn analyze_returns_approve_with_comment_suggest_remove_extern_crate_1() {
         .unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestRemovingExternCrate.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SuggestRemovingExternCrate.to_string())],
         ),
     );
 }
@@ -32,7 +33,7 @@ fn analyze_returns_approve_with_comment_suggest_remove_extern_crate_2() {
         .unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestRemovingExternCrate.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SuggestRemovingExternCrate.to_string())],
         ),
     );
 }
@@ -46,7 +47,9 @@ fn analyze_returns_approve_with_comment_suggest_bonus_1() {
         .unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestDoingBonusTest.to_string()],
+            vec![AnalysisComments::General(
+                ReverseStringComment::SuggestDoingBonusTest.to_string(),
+            )],
         ),
     );
 }
@@ -60,7 +63,9 @@ fn analyze_returns_approve_with_comment_suggest_bonus_2() {
         .unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Approve,
-            vec![ReverseStringComment::SuggestDoingBonusTest.to_string()],
+            vec![AnalysisComments::General(
+                ReverseStringComment::SuggestDoingBonusTest.to_string(),
+            )],
         ),
     );
 }
@@ -91,7 +96,9 @@ fn analyze_returns_disapprove_if_no_reverse_function_is_present() {
         &syn::parse_str::<File>("fn main() {println!(\"Test\");}").unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Disapprove,
-            vec![ReverseStringComment::SolutionFunctionNotFound.to_string()],
+            vec![AnalysisComments::General(
+                ReverseStringComment::SolutionFunctionNotFound.to_string(),
+            )],
         ),
     );
 }
@@ -105,7 +112,9 @@ fn analyze_returns_disapprove_if_reverse_function_is_not_public() {
         .unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Disapprove,
-            vec![ReverseStringComment::SolutionFunctionNotFound.to_string()],
+            vec![AnalysisComments::General(
+                ReverseStringComment::SolutionFunctionNotFound.to_string(),
+            )],
         ),
     );
 }
@@ -116,7 +125,7 @@ fn analyze_returns_disapprove_if_reverse_function_does_not_return_string() {
         &syn::parse_str::<File>("pub fn reverse(input: &str) -> &'static str { input.chars().rev().collect::<String>() }").unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Disapprove,
-            vec![ReverseStringComment::SolutionFunctionNotFound.to_string()],
+            vec![AnalysisComments::General(ReverseStringComment::SolutionFunctionNotFound.to_string())],
         ),
     );
 }
@@ -130,7 +139,9 @@ fn analyze_returns_disapprove_if_reverse_function_does_not_accept_str() {
         .unwrap(),
         AnalysisOutput::new(
             AnalysisStatus::Disapprove,
-            vec![ReverseStringComment::SolutionFunctionNotFound.to_string()],
+            vec![AnalysisComments::General(
+                ReverseStringComment::SolutionFunctionNotFound.to_string(),
+            )],
         ),
     );
 }
