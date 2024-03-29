@@ -1,0 +1,35 @@
+{
+  "status": "refer_to_mentor",
+  "comments": [
+    "rust.clock.impl_display_used",
+    "rust.clock.use_rem_euclid",
+    {
+      "comment": "rust.general.clippy",
+      "params": {
+        "clippy": "warning: variable does not need to be mutable\n  --> src/lib.rs:10:13\n   |\n10 |         let mut hours = self.minutes / 60;\n   |             ----^^^^^\n   |             |\n   |             help: remove this `mut`\n   |\n   = note: `#[warn(unused_mut)]` on by default\n\n"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "rust.general.clippy",
+      "params": {
+        "clippy": "warning: variable does not need to be mutable\n  --> src/lib.rs:11:13\n   |\n11 |         let mut mins = self.minutes % 60;\n   |             ----^^^^\n   |             |\n   |             help: remove this `mut`\n\n"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "rust.general.clippy",
+      "params": {
+        "clippy": "warning: returning the result of a `let` binding from a block\n  --> src/lib.rs:29:9\n   |\n26 | /         let clock = Clock {\n27 | |             minutes: mins % 1440,\n28 | |         };\n   | |__________- unnecessary `let` binding\n29 |           clock\n   |           ^^^^^\n   |\n   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#let_and_return\n   = note: `#[warn(clippy::let_and_return)]` on by default\nhelp: return the expression directly\n   |\n26 ~         \n27 ~         Clock {\n28 +             minutes: mins % 1440,\n29 +         }\n   |\n\n"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "rust.general.clippy",
+      "params": {
+        "clippy": "warning: 3 warnings emitted\n\n"
+      },
+      "type": "actionable"
+    }
+  ]
+}

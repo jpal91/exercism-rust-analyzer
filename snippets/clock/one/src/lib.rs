@@ -23,9 +23,10 @@ impl Clock {
         while mins < 0 {
             mins += 1440;
         }
-        Clock {
+        let clock = Clock {
             minutes: mins % 1440,
-        }
+        };
+        clock
     }
 
     pub fn add_minutes(&mut self, minutes: i32) -> Self {

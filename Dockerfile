@@ -1,4 +1,4 @@
-FROM rust:1.71-slim as base
+FROM rust:1.73-slim as base
 
 WORKDIR /analyzer
 
@@ -16,5 +16,8 @@ FROM alpine:3.18.4
 WORKDIR /opt/analyzer
 
 COPY --from=base /analyzer/bin/* ./bin/
+
+# Adding the cargo binary to run clippy
+COPY --from=base /usr/local/rustup/toolchains/1.73.0-x86_64-unknown-linux-gnu/bin/cargo ./cargo
 
 ENTRYPOINT ["bin/run.sh"]
