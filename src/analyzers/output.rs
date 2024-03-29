@@ -5,9 +5,7 @@
 use crate::Result;
 use serde::{Serialize, Serializer};
 use std::{
-    fmt::{self, Display},
-    fs,
-    path::Path,
+    collections::HashMap, fmt::{self, Display}, fs, path::Path
 };
 
 /// The status of the exercise analysis.
@@ -18,11 +16,6 @@ pub enum AnalysisStatus {
     ReferToMentor,
 }
 
-#[derive(Debug, PartialEq, Serialize, Clone)]
-pub struct Params {
-    pub key: String
-}
-
 /// Comment types to be included in analysis
 /// [Exercism Analyzer](https://exercism.org/docs/building/tooling/analyzers/interface#h-output-format)
 #[derive(Debug, PartialEq, Serialize, Clone)]
@@ -31,7 +24,7 @@ pub enum AnalysisComments {
     General(String),
     Extended {
         comment: String,
-        params: Params,
+        params: HashMap<String, String>,
         #[serde(rename = "type")]
         analysis_type: String
     }

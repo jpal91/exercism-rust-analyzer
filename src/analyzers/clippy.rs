@@ -1,8 +1,9 @@
 use std::path::Path;
 use std::process::{Command, Stdio};
+use std::collections::HashMap;
 use cargo_metadata::{diagnostic::DiagnosticLevel, Message};
 
-use crate::analyzers::{output::Params, AnalysisComments};
+use crate::analyzers::AnalysisComments;
 
 fn cd_into_repo_root(path: &Path) {
     std::env::set_current_dir(path).unwrap();
@@ -19,11 +20,13 @@ fn parse_msg(msg: Message) -> Option<AnalysisComments> {
             DiagnosticLevel::Warning => "actionable".to_string(),
             _ => "informative".to_string(),
         };
-
-        let params = if let Some(message) = diagnostic.rendered {
-            Params { key: message }
+        
+        let mut params = HashMap::with_capacity(1);
+        
+        if let Some(message) = diagnostic.rendered {
+            params.insert("clippy".to_string(), message);
         } else {
-            Params { key: diagnostic.message }
+            params.insert("clippy".to_string(), diagnostic.message);
         };
 
         Some(AnalysisComments::Extended {
