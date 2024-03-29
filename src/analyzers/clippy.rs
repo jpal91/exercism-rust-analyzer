@@ -1,7 +1,7 @@
+use cargo_metadata::{diagnostic::DiagnosticLevel, Message};
+use std::collections::HashMap;
 use std::path::Path;
 use std::process::{Command, Stdio};
-use std::collections::HashMap;
-use cargo_metadata::{diagnostic::DiagnosticLevel, Message};
 
 use crate::analyzers::AnalysisComments;
 
@@ -24,9 +24,9 @@ fn parse_msg(msg: Message) -> Option<AnalysisComments> {
             DiagnosticLevel::Warning => "actionable".to_string(),
             _ => "informative".to_string(),
         };
-        
+
         let mut params = HashMap::with_capacity(1);
-        
+
         if let Some(message) = diagnostic.rendered {
             params.insert("clippy".to_string(), message);
         } else {
@@ -44,23 +44,21 @@ fn parse_msg(msg: Message) -> Option<AnalysisComments> {
 }
 
 /// Moves into the targeted exercise's repo, runs clippy, and returns parsed results
-pub fn get_clippy(path: &Path) -> Vec<AnalysisComments> {
+pub fn get_clippy(path: &Path) -> Result<Vec<AnalysisComments>, std::io::Error> {
     cd_into_repo_root(path);
 
     let mut cmd = Command::new("cargo")
-        .args(&["clippy", "--message-format=json"])
+        .args(["clippy", "--message-format=json"])
         .stdout(Stdio::piped())
-        .spawn()
-        .unwrap();
+        .spawn()?;
 
     let reader = std::io::BufReader::new(cmd.stdout.take().unwrap());
 
     let clippy_comments = Message::parse_stream(reader)
-        .into_iter()
         .filter_map(|msg| parse_msg(msg.unwrap()))
         .collect();
 
-    let _ = cmd.wait().expect("No exit status");
+    cmd.wait()?;
 
-    clippy_comments
+    Ok(clippy_comments)
 }

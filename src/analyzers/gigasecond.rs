@@ -63,10 +63,7 @@ pub fn after(start: DateTime<Utc>) -> DateTime<Utc> {
             solution,
             AnalysisOutput::new(
                 AnalysisStatus::Approve,
-                vec![
-                    LITERAL_WITH_UNDERSCORE_USED.into(),
-                    PLUS_OP_USED.into(),
-                ],
+                vec![LITERAL_WITH_UNDERSCORE_USED.into(), PLUS_OP_USED.into()],
             ),
         );
     }

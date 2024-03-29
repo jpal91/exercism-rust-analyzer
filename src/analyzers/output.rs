@@ -5,7 +5,10 @@
 use crate::Result;
 use serde::{Serialize, Serializer};
 use std::{
-    collections::HashMap, fmt::{self, Display}, fs, path::Path
+    collections::HashMap,
+    fmt::{self, Display},
+    fs,
+    path::Path,
 };
 
 /// The status of the exercise analysis.
@@ -26,8 +29,8 @@ pub enum AnalysisComments {
         comment: String,
         params: HashMap<String, String>,
         #[serde(rename = "type")]
-        analysis_type: String
-    }
+        analysis_type: String,
+    },
 }
 
 /// The result of the exercise analysis.
@@ -73,9 +76,9 @@ impl Serialize for AnalysisStatus {
     }
 }
 
-impl<T> From<T> for AnalysisComments 
+impl<T> From<T> for AnalysisComments
 where
-    T: Display
+    T: Display,
 {
     fn from(value: T) -> Self {
         Self::General(value.to_string())

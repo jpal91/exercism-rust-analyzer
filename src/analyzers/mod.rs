@@ -69,8 +69,8 @@ macro_rules! note_if_missing {
 
 pub type Lint = fn(&str) -> Option<(i32, String)>;
 
-pub mod comments;
 pub mod clippy;
+pub mod comments;
 
 pub mod clock;
 pub mod gigasecond;
@@ -79,7 +79,7 @@ pub mod reverse_string;
 pub mod output;
 use crate::analyzers::comments::GeneralComment;
 use crate::Result;
-use output::{AnalysisOutput, AnalysisStatus, AnalysisComments};
+use output::{AnalysisComments, AnalysisOutput, AnalysisStatus};
 pub use reverse_string::ReverseStringAnalyzer;
 use syn::File;
 
@@ -100,7 +100,9 @@ pub trait Analyze {
         if !solution_raw.contains(method_hint) {
             Ok(AnalysisOutput::new(
                 AnalysisStatus::Disapprove,
-                vec![AnalysisComments::General(GeneralComment::SolutionFunctionNotFound.to_string())],
+                vec![AnalysisComments::General(
+                    GeneralComment::SolutionFunctionNotFound.to_string(),
+                )],
             ))
         } else {
             let analysis: Vec<(i32, String)> =
