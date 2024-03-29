@@ -20,15 +20,16 @@ pub enum AnalysisStatus {
 
 #[derive(Debug, PartialEq, Serialize, Clone)]
 pub struct Params {
-    key: String
+    pub key: String
 }
 
 /// Comment types to be included in analysis
-/// [Exercism Analyzer](https://exercism.org/docs/building/tooling/analyzers/interface)
+/// [Exercism Analyzer](https://exercism.org/docs/building/tooling/analyzers/interface#h-output-format)
 #[derive(Debug, PartialEq, Serialize, Clone)]
+#[serde(untagged)]
 pub enum AnalysisComments {
     General(String),
-    Clippy {
+    Extended {
         comment: String,
         params: Params,
         #[serde(rename = "type")]

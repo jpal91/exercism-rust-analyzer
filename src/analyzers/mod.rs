@@ -70,6 +70,7 @@ macro_rules! note_if_missing {
 pub type Lint = fn(&str) -> Option<(i32, String)>;
 
 pub mod comments;
+pub mod clippy;
 
 pub mod clock;
 pub mod gigasecond;
