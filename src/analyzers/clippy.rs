@@ -15,6 +15,10 @@ fn parse_msg(msg: Message) -> Option<AnalysisComments> {
     if let Message::CompilerMessage(m) = msg {
         let diagnostic = m.message;
 
+        // Maybe TODO: The very last message - diagnostic.code is None.
+        // It appears to only be a message stating how many warnings/errors
+        // there are so may be worth it to filter. Unsure if it has more use.
+
         let analysis_type = match diagnostic.level {
             DiagnosticLevel::Error => "essential".to_string(),
             DiagnosticLevel::Warning => "actionable".to_string(),

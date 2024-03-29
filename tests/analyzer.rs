@@ -9,6 +9,7 @@ use rust_analyzer::{
 use std::{fs, path::Path};
 
 const REVERSE_STRING_SLUG: &str = "reverse-string";
+const CLOCK_SLUG: &str = "clock";
 
 fn check_analysis_json(solution_dir_path: &Path, expected: &AnalysisOutput) {
     let analysis_json_path = solution_dir_path.join("analysis.json");
@@ -125,4 +126,20 @@ fn reverse_string_analyzer_run_on_every_solution() {
             solution_dir.path().to_str().unwrap()
         ))
         .all(|analyze_result| analyze_result.is_ok()))
+}
+
+#[test]
+fn clock_analyzer_writes_json_refer_with_unused_mut() {
+    let snippets_dir = Path::new("snippets")
+        .join("clock")
+        .join("unused-mut");
+    let expected_path = snippets_dir.clone().join("expected-analysis.json");
+    let analysis_path = snippets_dir.clone().join("analysis.json");
+
+    assert!(analyze_exercise(CLOCK_SLUG, snippets_dir.to_str().unwrap()).is_ok());
+
+    let res = fs::read_to_string(analysis_path).unwrap();
+    let expected = fs::read_to_string(expected_path).unwrap();
+
+    assert_eq!(res, expected)
 }

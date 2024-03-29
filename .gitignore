@@ -2,3 +2,5 @@
 **/*.rs.bk
 *.swp
 snippets/**/analysis.json
+snippets/**/Cargo.lock
+snippets/**/target
