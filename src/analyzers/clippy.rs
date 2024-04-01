@@ -17,7 +17,7 @@ fn parse_msg(msg: Message) -> Option<AnalysisComments> {
 
         // Maybe TODO: The very last message - diagnostic.code is None.
         // It appears to only be a message stating how many warnings/errors
-        // there are so may be worth it to filter. Unsure if it has more use.
+        // there are, so may be worth it to filter. Unsure if it has more use.
 
         let analysis_type = match diagnostic.level {
             DiagnosticLevel::Error => "essential".to_string(),

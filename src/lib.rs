@@ -51,7 +51,8 @@ pub fn analyze_exercise(slug: &str, solution_dir: &str) -> Result<()> {
                 Ok(ana) => ana.analyze(&solution_ast, source)?,
                 _ => AnalysisOutput::new(AnalysisStatus::ReferToMentor, vec![]),
             };
-
+            
+            // Run clippy on target directory and append any results
             if let Ok(clippy) = get_clippy(solution_dir_path) {
                 output.comments.extend(clippy);
             };
