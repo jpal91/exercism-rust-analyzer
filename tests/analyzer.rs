@@ -130,9 +130,7 @@ fn reverse_string_analyzer_run_on_every_solution() {
 
 #[test]
 fn clock_analyzer_writes_json_refer_with_unused_mut() {
-    let snippets_dir = Path::new("snippets")
-        .join("clock")
-        .join("unused-mut");
+    let snippets_dir = Path::new("snippets").join("clock").join("unused-mut");
     let expected_path = snippets_dir.clone().join("expected-analysis.json");
     let analysis_path = snippets_dir.clone().join("analysis.json");
 
