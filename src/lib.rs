@@ -49,12 +49,15 @@ pub fn analyze_exercise(slug: &str, solution_dir: &str) -> Result<()> {
             // Solution file exists and can be parsed by syn => run analysis
             let mut output = match get_analyzer(slug) {
                 Ok(ana) => ana.analyze(&solution_ast, source)?,
-                _ => AnalysisOutput::new(AnalysisStatus::ReferToMentor, vec![]),
+                _ => AnalysisOutput::new(AnalysisStatus::Approve, vec![]),
             };
 
             // Run clippy on target directory and append any results
             if let Ok(clippy) = get_clippy(solution_dir_path) {
-                output.comments.extend(clippy);
+                if !clippy.is_empty() {
+                    output.comments.extend(clippy);
+                    output.status = AnalysisStatus::ReferToMentor;
+                }
             };
 
             output
